@@ -1,0 +1,79 @@
+<div class="container my-4">
+    <!-- Título principal -->
+    <h3 class="text-center">Lista de Posts</h3>
+    
+    <!-- Botón para abrir el modal de creación de un nuevo post -->
+    <button class="btn btn-success mb-4" (click)="openModal()">Crear Nuevo Post</button>
+    
+    <!-- Tabla que muestra los posts si existen -->
+    <table *ngIf="posts.length" class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th> <!-- Columna para el ID del post -->
+          <th>Título</th> <!-- Columna para el título del post -->
+          <th>Acciones</th> <!-- Columna para las acciones de editar/eliminar -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Bucle que recorre la lista de posts y muestra cada uno -->
+        <tr *ngFor="let post of posts">
+          <td>{{ post.id }}</td> <!-- Muestra el ID del post -->
+          <td>{{ post.title }}</td> <!-- Muestra el título del post -->
+          <td>
+            <!-- Botón para abrir el modal de edición con el post actual -->
+            <button (click)="openModal(post)" class="btn btn-warning btn-sm">
+              Editar
+            </button>
+            <!-- Botón para eliminar el post -->
+            <button (click)="deletePost(post.id)" class="btn btn-danger btn-sm ms-2">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Mensaje que se muestra si no hay posts -->
+    <div *ngIf="posts.length === 0" class="alert alert-info text-center mt-4">
+      No hay posts disponibles.
+    </div>
+  </div>
+  
+  <!-- Modal para crear o editar un post -->
+  <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">{{ isEditing ? 'Editar Post' : 'Crear Nuevo Post' }}</h5>
+          <!-- Botón para cerrar el modal -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <form #postForm="ngForm" class="needs-validation">
+            <!-- Campo para el título del post -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Título</label>
+              <input type="text" class="form-control" id="title" required [(ngModel)]="post.title" name="title" />
+            </div>
+  
+            <!-- Campo para el cuerpo del post -->
+            <div class="mb-3">
+              <label for="body" class="form-label">Contenido</label>
+              <textarea class="form-control" id="body" required [(ngModel)]="post.body" name="body" rows="3"></textarea>
+            </div>
+          </form>
+        </div>
+        <!-- Pie del modal con botones para guardar o cancelar -->
+        <div class="modal-footer">
+          <!-- Botón para guardar (crear/editar) el post -->
+          <button type="button" class="btn btn-primary" (click)="savePost()" [disabled]="!postForm.form.valid">
+            {{ isEditing ? 'Actualizar Post' : 'Crear Post' }}
+          </button>
+          <!-- Botón para cancelar la operación y cerrar el modal -->
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>  
