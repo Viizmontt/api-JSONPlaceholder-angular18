@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';  // Módulo que proporciona funcionalidades comunes de Angular
 import { Component, OnInit } from '@angular/core';  // Importación de componentes y del ciclo de vida OnInit
 import { RouterModule, RouterOutlet } from '@angular/router';  // Módulos de enrutamiento para Angular
-import { Post } from '../../models/post';  // Modelo Post que define la estructura de un post
-import { PostService } from '../../services/post.service';  // Servicio para realizar operaciones CRUD con los posts
+import { Post } from '../models/post';  // Modelo Post que define la estructura de un post
+import { PostService } from '../services/post.service';  // Servicio para realizar operaciones CRUD con los posts
 import { FormsModule } from '@angular/forms';  // Módulo para gestionar formularios
 declare var bootstrap: any;  // Declaración para poder usar Bootstrap de manera global
 
+
 @Component({
-  selector: 'app-posts',  // Nombre del componente para usarlo como etiqueta HTML
-  standalone: true,  // El componente es independiente, no necesita un módulo para ser utilizado
-  imports: [RouterModule, RouterOutlet, CommonModule, FormsModule],  // Módulos que el componente necesita
-  templateUrl: './posts.component.html',  // Ruta al archivo HTML que contiene la vista
-  styleUrl: './posts.component.css'  // Ruta al archivo CSS que da estilo al componente
+  selector: 'app-posts',
+  standalone: true,
+  imports: [RouterModule, RouterOutlet, CommonModule, FormsModule],
+  templateUrl: './posts.component.html',
+  styleUrl: './posts.component.css'
 })
 export class PostsComponent implements OnInit {
 
   posts: Post[] = [];  // Lista que almacenará todos los posts
-  post: Post = { userId: 1, id: 0, title: '', body: '' };  // Objeto que representa el post actual
+  post: Post = { userId: 0, id: 0, title: '', body: '' };  // Objeto que representa el post actual
   isEditing = false;  // Bandera para determinar si estamos en modo edición o creación
   modal: any;  // Referencia al modal de Bootstrap para crear/editar posts
 
@@ -104,6 +105,6 @@ export class PostsComponent implements OnInit {
 
   // Método para limpiar el formulario y restablecer el objeto post a sus valores iniciales
   clearForm(): void {
-    this.post = { userId: 1, id: 0, title: '', body: '' };  // Restablecemos los valores por defecto
+    this.post = { userId: 0, id: 0, title: '', body: '' };  // Restablecemos los valores por defecto
   }
 }
